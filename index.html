@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guiki - Espace Créatif Tout-en-Un</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-xl shadow-lg shadow-indigo-500/30">
+                G
+            </div>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">Guiki</h1>
+                <p class="text-xs text-slate-400" data-translate="subtitle">Ton espace créatif unifié</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <!-- Language Selector -->
+            <div class="flex items-center bg-slate-800 border border-slate-700 rounded-lg p-1 text-sm">
+                <button onclick="switchLanguage('fr')" id="lang-fr" class="px-3 py-1 rounded-md bg-indigo-600 text-white font-medium transition">FR</button>
+                <button onclick="switchLanguage('en')" id="lang-en" class="px-3 py-1 rounded-md text-slate-400 hover:text-white transition">EN</button>
+            </div>
+            <button onclick="resetWorkspace()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-4 py-2 rounded-xl text-sm font-medium transition flex items-center space-x-2">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span data-translate="reset">Réinitialiser</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Sidebar Navigation -->
+        <div class="md:col-span-1 flex flex-col space-y-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-2" data-translate="modules">Modules</p>
+                <nav class="space-y-1">
+                    <button onclick="switchTab('writer')" id="btn-writer" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition bg-indigo-600/10 text-indigo-400 border border-indigo-500/20">
+                        <i class="fa-solid fa-file-lines w-5"></i>
+                        <span data-translate="writer_tab">Rédacteur (Word)</span>
+                    </button>
+                    <button onclick="switchTab('slides')" id="btn-slides" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+                        <i class="fa-solid fa-presentation-screen w-5"></i>
+                        <span data-translate="slides_tab">Présentation (PowerPoint)</span>
+                    </button>
+                    <button onclick="switchTab('studio')" id="btn-studio" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+                        <i class="fa-solid fa-wand-magic-sparkles w-5"></i>
+                        <span data-translate="studio_tab">Studio Graphique (Adobe)</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Quick Stats / Info -->
+            <div class="bg-gradient-to-br from-indigo-950/40 to-purple-950/40 border border-indigo-900/50 rounded-2xl p-4 text-sm">
+                <h3 class="font-bold text-indigo-300 mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info"></i> Guiki Engine
+                </h3>
+                <p class="text-xs text-slate-400" data-translate="info_text">Édition locale en temps réel. Tes créations sont automatiquement sauvegardées dans ton navigateur.</p>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="md:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+
+            <!-- TAB 1: WRITER -->
+            <div id="tab-writer" class="p-6 flex flex-col h-full space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-file-lines text-indigo-400 text-xl"></i>
+                        <h2 class="text-lg font-bold" data-translate="writer_title">Espace Document</h2>
+                    </div>
+                    <!-- Formatting Toolbar -->
+                    <div class="flex items-center space-x-1 bg-slate-800/80 p-1 rounded-lg border border-slate-700">
+                        <button onclick="formatText('bold')" class="p-2 hover:bg-slate-700 rounded text-slate-300 hover:text-white" title="Gras"><i class="fa-solid fa-bold"></i></button>
+                        <button onclick="formatText('italic')" class="p-2 hover:bg-slate-700 rounded text-slate-300 hover:text-white" title="Italique"><i class="fa-solid fa-italic"></i></button>
+                        <button onclick="formatText('underline')" class="p-2 hover:bg-slate-700 rounded text-slate-300 hover:text-white" title="Souligné"><i class="fa-solid fa-underline"></i></button>
+                        <span class="w-px h-4 bg-slate-700 mx-1"></span>
+                        <button onclick="formatText('insertUnorderedList')" class="p-2 hover:bg-slate-700 rounded text-slate-300 hover:text-white" title="Liste à puces"><i class="fa-solid fa-list-ul"></i></button>
+                    </div>
+                </div>
+                <div id="writer-editor" contenteditable="true" class="flex-1 min-h-[400px] bg-slate-950/60 border border-slate-800 rounded-xl p-5 focus:outline-none focus:border-indigo-500 text-slate-200 leading-relaxed overflow-y-auto">
+                    Commence à rédiger ton document ici...
+                </div>
+            </div>
+
+            <!-- TAB 2: SLIDES -->
+            <div id="tab-slides" class="p-6 hidden flex flex-col h-full space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-presentation-screen text-purple-400 text-xl"></i>
+                        <h2 class="text-lg font-bold" data-translate="slides_title">Espace Présentation</h2>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="prevSlide()" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-sm border border-slate-700"><i class="fa-solid fa-chevron-left"></i></button>
+                        <span id="slide-indicator" class="text-sm font-semibold text-slate-400">Diapo 1 / 3</span>
+                        <button onclick="nextSlide()" class="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg text-sm border border-slate-700"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div id="slide-container" class="flex-1 min-h-[400px] bg-gradient-to-br from-indigo-950/20 to-slate-950 border border-slate-800 rounded-xl p-8 flex flex-col justify-center items-center text-center shadow-inner relative">
+                    <h3 id="slide-title" contenteditable="true" class="text-3xl font-extrabold text-white mb-4 outline-none border-b border-transparent focus:border-indigo-500">Titre de la Diapositive</h3>
+                    <p id="slide-content" contenteditable="true" class="text-slate-300 text-lg max-w-xl outline-none border-b border-transparent focus:border-indigo-500">Clique ici pour modifier le texte de ton support de présentation personnalisé.</p>
+                </div>
+            </div>
+
+            <!-- TAB 3: STUDIO -->
+            <div id="tab-studio" class="p-6 hidden flex flex-col h-full space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-pink-400 text-xl"></i>
+                        <h2 class="text-lg font-bold" data-translate="studio_title">Studio de Design</h2>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
+                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col space-y-3">
+                        <label class="text-sm font-medium text-slate-300" data-translate="bg_color">Couleur de fond</label>
+                        <input type="color" id="studio-bg-color" value="#1e1b4b" onchange="updateStudioBackground()" class="w-full h-10 rounded-lg bg-transparent cursor-pointer border border-slate-700">
+                        
+                        <label class="text-sm font-medium text-slate-300 mt-2" data-translate="badge_text">Texte du Badge</label>
+                        <input type="text" id="studio-badge-text" value="Nouveau Projet" oninput="updateStudioBadge()" class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-pink-500">
+                    </div>
+                    <div class="md:col-span-2 bg-slate-950 border border-slate-800 rounded-xl flex items-center justify-center p-8 relative overflow-hidden">
+                        <div id="studio-preview-card" class="w-72 h-44 rounded-2xl bg-indigo-950 border border-indigo-800 p-6 flex flex-col justify-between shadow-2xl transition-all duration-300">
+                            <span id="preview-badge" class="self-start bg-pink-500/20 text-pink-300 border border-pink-500/30 text-xs px-2.5 py-1 rounded-full font-medium">Nouveau Projet</span>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">Guiki Graphic</h4>
+                                <p class="text-xs text-slate-400">Design rapide et fluide</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Translations & Script Logic -->
+    <script>
+        const translations = {
+            fr: {
+                subtitle: "Ton espace créatif unifié",
+                reset: "Réinitialiser",
+                modules: "Modules",
+                writer_tab: "Rédacteur (Word)",
+                slides_tab: "Présentation (PowerPoint)",
+                studio_tab: "Studio Graphique (Adobe)",
+                info_text: "Édition locale en temps réel. Tes créations sont automatiquement sauvegardées dans ton navigateur.",
+                writer_title: "Espace Document",
+                slides_title: "Espace Présentation",
+                studio_title: "Studio de Design",
+                bg_color: "Couleur de fond",
+                badge_text: "Texte du Badge"
+            },
+            en: {
+                subtitle: "Your Unified Creative Hub",
+                reset: "Reset",
+                modules: "Modules",
+                writer_tab: "Writer (Word)",
+                slides_tab: "Presentation (PowerPoint)",
+                studio_tab: "Graphic Studio (Adobe)",
+                info_text: "Real-time local editing. Your creations are automatically saved in your browser.",
+                writer_title: "Document Space",
+                slides_title: "Presentation Space",
+                studio_title: "Design Studio",
+                bg_color: "Background Color",
+                badge_text: "Badge Text"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('lang-fr').className = lang === 'fr' ? 'px-3 py-1 rounded-md bg-indigo-600 text-white font-medium transition' : 'px-3 py-1 rounded-md text-slate-400 hover:text-white transition';
+            document.getElementById('lang-en').className = lang === 'en' ? 'px-3 py-1 rounded-md bg-indigo-600 text-white font-medium transition' : 'px-3 py-1 rounded-md text-slate-400 hover:text-white transition';
+            
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+        }
+
+        function switchTab(tabId) {
+            ['writer', 'slides', 'studio'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-slate-200";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            
+            const activeColors = {
+                writer: "bg-indigo-600/10 text-indigo-400 border border-indigo-500/20",
+                slides: "bg-purple-600/10 text-purple-400 border border-purple-500/20",
+                studio: "bg-pink-600/10 text-pink-400 border border-pink-500/20"
+            };
+            document.getElementById(`btn-${tabId}`).className = `w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition ${activeColors[tabId]}`;
+        }
+
+        function formatText(command) {
+            document.execCommand(command, false, null);
+        }
+
+        // Slides Data
+        const slides = [
+            { title: "Bienvenue sur Guiki", content: "Ton application créative tout-en-un, rapide et élégante." },
+            { title: "Rédige et Présente", content: "Plus besoin de basculer entre dix logiciels lourds. Tout est réuni ici." },
+            { title: "Crée sans limites", content: "Modifie les textes directement sur les diapos et exporte tes idées." }
+        ];
+        let currentSlide = 0;
+
+        function updateSlideDisplay() {
+            document.getElementById('slide-title').innerText = slides[currentSlide].title;
+            document.getElementById('slide-content').innerText = slides[currentSlide].content;
+            document.getElementById('slide-indicator').innerText = `Diapo ${currentSlide + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlideDisplay();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlideDisplay();
+        }
+
+        function updateStudioBackground() {
+            const color = document.getElementById('studio-bg-color').value;
+            document.getElementById('studio-preview-card').style.backgroundColor = color;
+        }
+
+        function updateStudioBadge() {
+            const text = document.getElementById('studio-badge-text').value;
+            document.getElementById('preview-badge').innerText = text;
+        }
+
+        function resetWorkspace() {
+            if(confirm("Réinitialiser le contenu ?")) {
+                document.getElementById('writer-editor').innerHTML = "Commence à rédiger ton document ici...";
+                currentSlide = 0;
+                updateSlideDisplay();
+            }
+        }
+    </script>
+</body>
+</html>
